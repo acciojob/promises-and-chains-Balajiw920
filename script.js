@@ -1,41 +1,34 @@
 //your JS code here. If required.
 const form = document.querySelector('form');
-const ageInput = document.getElementById('age');
-const nameInput = document.getElementById('name');
-const submitBtn = document.getElementById('btn');
+const nameInput = document.querySelector('#name');
+const ageInput = document.querySelector('#age');
+const btn = document.querySelector('#btn');
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-
-  const age = parseInt(ageInput.value);
-  const name = nameInput.value;
-
-  if (!age || !name) {
-    alert('Please fill in both age and name');
+  
+  if (!nameInput.value || !ageInput.value) {
+    alert('Please enter your name and age.');
     return;
   }
-
+  
+  const age = parseInt(ageInput.value);
+  
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (age > 18) {
-        resolve({ age, name });
+      if (age >= 18) {
+        resolve();
       } else {
         reject();
       }
     }, 4000);
   });
-
+  
   promise
-    .then((obj) => obj.age)
-    .then((age) => ({ canVote: true, age }))
-    .then(({ canVote, age }) => {
-      if (canVote) {
-        alert(`Welcome, ${name}. You can vote.`);
-      } else {
-        alert(`Oh sorry ${name}. You aren't old enough.`);
-      }
+    .then(() => {
+      alert(`Welcome, ${nameInput.value}. You can vote.`);
     })
     .catch(() => {
-      alert(`Oh sorry ${name}. You aren't old enough.`);
+      alert(`Oh sorry ${nameInput.value}. You aren't old enough.`);
     });
 });
